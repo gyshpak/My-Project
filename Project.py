@@ -7,6 +7,7 @@ y1 = 0
 x2 = 0
 y2 = 0
 coordinat_list =[]
+glob_color = 'black'
 # nom_click = 0
 
 # def new_position(event):
@@ -40,22 +41,26 @@ button = Button(frame,
                    bg="red", fg="white", 
                    font=('Courier', 12), 
                 #    command=lambda: get_weather(entry_field.get()))
-                   command=lambda: my_oval())
+                   command=lambda: take_color('red'))
 button.place(relx=0.2, rely=0, relwidth=0.1, relheight=1)
 button = Button(frame, 
                    text="green", 
                    bg="green", fg="white", 
                    font=('Courier', 12), 
                 #    command=lambda: get_weather(entry_field.get()))
-                   command=lambda: my_oval())
+                   command=lambda: take_color('green'))
 button.place(relx=0.3, rely=0, relwidth=0.1, relheight=1)
 button = Button(frame, 
                    text="blue", 
                    bg="blue", fg="white", 
                    font=('Courier', 12), 
                 #    command=lambda: get_weather(entry_field.get()))
-                   command=lambda: my_oval())
+                   command=lambda: take_color('blue'))
 button.place(relx=0.4, rely=0, relwidth=0.1, relheight=1)
+
+def take_color(color):
+    global glob_color
+    glob_color = color
 
 def new_coord1(event):
     # global x1, y1, x2, y2, nom_click
@@ -66,7 +71,7 @@ def new_coord1(event):
     y2 = y1
     # nom_click = 1
 def new_coord2(event):
-    global x1, y1, x2, y2, nom_click
+    global x1, y1, x2, y2
     x2 = event.x
     y2 = event.y
     # nom_click = 0
@@ -86,11 +91,12 @@ def cre_ov(event):
 
 def create_oval2(x1, y1, x2, y2):
     # list1 = x1, 
-    coordinat_list.append([x1, y1, x2, y2])
+    coordinat_list.append([x1, y1, x2, y2, glob_color])
     for i in coordinat_list:
 
         # canvas.create_oval(i, fill = 'blue', width=0)
-        canvas.create_oval(i, outline = 'RED', width=2)
+        # canvas.create_oval(i, outline = glob_color, width=2)
+        canvas.create_oval(i[0], i[1], i[2], i[3], outline = i[4], width=2)
 
 # print(x1, x2)
 
