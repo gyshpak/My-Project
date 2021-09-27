@@ -8,20 +8,7 @@ x2 = 0
 y2 = 0
 coordinat_list =[]
 glob_color = 'black'
-# nom_click = 0
 
-# def new_position(event):
-#     global x1, y1, x2, y2
-#     print(x1, x2)
-#     if x1 == 0:
-#         x1 = event.x
-#         y1 = event.y
-#     else:
-#         x2 = event.x
-#         y2 = event.y
-#     print(x1, x2)
-
-# canvas = Canvas(root, height=HEIGHT, width=WIDTH, bg='white')
 canvas = Canvas(root, height=HEIGHT, width=WIDTH)
 canvas.pack()
 
@@ -72,71 +59,50 @@ def take_color(color):
     glob_color = color
 
 def new_coord1(event):
-    # global x1, y1, x2, y2, nom_click
     global x1, y1, x2, y2
     x1 = event.x
     x2 = x1
     y1 = event.y
     y2 = y1
-    # nom_click = 1
 def new_coord2(event):
     global x1, y1, x2, y2
     x2 = event.x
     y2 = event.y
-    # nom_click = 0
-    # canvas.create_oval(x1,y1,x2,y2,fill = 'RED', width=0)
-    create_oval2(x1, y1, x2, y2)
+    create_figure(x1, y1, x2, y2, 'oval')
+    
     x1, y1, x2, y2 = 0, 0, 0, 0
 
 def new_coord_line(event):
     global x1, y1, x2, y2
     x2 = event.x
     y2 = event.y
-    # nom_click = 0
-    # canvas.create_oval(x1,y1,x2,y2,fill = 'RED', width=0)
-    create_line2(x1, y1, x2, y2)
+    create_figure(x1, y1, x2, y2, 'line')
     x1, y1, x2, y2 = 0, 0, 0, 0
 
 
 def cre_ov(event):
     global x1, y1, x2, y2
-    # canvas.create_oval(x1,y1,x2,y2,fill = 'white', width=0)
     canvas.create_oval(x1,y1,x2,y2,outline = 'white', width=1)
     x2 = event.x
     y2 = event.y
-    # canvas.create_oval(x1,y1,x2,y2,fill = 'green', width=0)
     canvas.create_oval(x1,y1,x2,y2, width=1)
 
 def cre_line(event):
     global x1, y1, x2, y2
-    # canvas.create_oval(x1,y1,x2,y2,fill = 'white', width=0)
     canvas.create_line(x1,y1,x2,y2,fill = 'white', width=1)
     x2 = event.x
     y2 = event.y
-    # canvas.create_oval(x1,y1,x2,y2,fill = 'green', width=0)
     canvas.create_line(x1,y1,x2,y2, width=1)
 
-def create_oval2(x1, y1, x2, y2):
-    # list1 = x1, 
-    coordinat_list.append([x1, y1, x2, y2, glob_color])
+def create_figure(x1, y1, x2, y2, figure):
+    
+    coordinat_list.append([figure, x1, y1, x2, y2, glob_color])
     for i in coordinat_list:
+        if i[0] == 'line':
+            canvas.create_line(i[1], i[2], i[3], i[4], fill = i[5], width=2)
+        elif i[0] == 'oval':
+            canvas.create_oval(i[1], i[2], i[3], i[4], outline = i[5], width=2)
 
-        # canvas.create_oval(i, 'blue', width=0)
-        # canvas.create_oval(i, outline = glob_color, width=2)
-        canvas.create_oval(i[0], i[1], i[2], i[3], outline = i[4], width=2)
-
-def create_line2(x1, y1, x2, y2):
-    # list1 = x1, 
-    coordinat_list.append([x1, y1, x2, y2, glob_color])
-    for i in coordinat_list:
-
-        # canvas.create_oval(i, fill = 'blue', width=0)
-        # canvas.create_oval(i, outline = glob_color, width=2)
-        canvas.create_line(i[0], i[1], i[2], i[3], fill = i[4], width=2)
-
-# print(x1, x2)
-
-# canvas.bind('<Button-1>',new_position)
 def my_oval():
     canvas.bind('<Button-1>', new_coord1)
     canvas.bind('<B1-Motion>',cre_ov)
@@ -146,16 +112,5 @@ def my_line():
     canvas.bind('<Button-1>', new_coord1)
     canvas.bind('<B1-Motion>',cre_line)
     canvas.bind('<ButtonRelease-1>', new_coord_line)
-
-
-# canvas.bind('<B-1>', new_coord2)
-
-# if x1 != 0 and x2 !=0:
-    # canvas.create_oval(x1,y1,x2,y2,fill = 'RED', width=0)
-
-# canvas.create_oval(x1,y1,x2,y2,fill = 'red', width=0)
-
-# print(x1, x2)
-
 
 root.mainloop()
