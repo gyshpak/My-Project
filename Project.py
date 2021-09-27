@@ -37,26 +37,35 @@ button = Button(frame,
 button.place(relx=0.1, rely=0, relwidth=0.1, relheight=1)
 
 button = Button(frame, 
+                   text="line", 
+                   bg="gray", fg="white", 
+                   font=('Courier', 12), 
+                #    command=lambda: get_weather(entry_field.get()))
+                   command=lambda: my_line())
+button.place(relx=0.2, rely=0, relwidth=0.1, relheight=1)
+
+
+button = Button(frame, 
                    text="red", 
                    bg="red", fg="white", 
                    font=('Courier', 12), 
                 #    command=lambda: get_weather(entry_field.get()))
                    command=lambda: take_color('red'))
-button.place(relx=0.2, rely=0, relwidth=0.1, relheight=1)
+button.place(relx=0.3, rely=0, relwidth=0.1, relheight=1)
 button = Button(frame, 
                    text="green", 
                    bg="green", fg="white", 
                    font=('Courier', 12), 
                 #    command=lambda: get_weather(entry_field.get()))
                    command=lambda: take_color('green'))
-button.place(relx=0.3, rely=0, relwidth=0.1, relheight=1)
+button.place(relx=0.4, rely=0, relwidth=0.1, relheight=1)
 button = Button(frame, 
                    text="blue", 
                    bg="blue", fg="white", 
                    font=('Courier', 12), 
                 #    command=lambda: get_weather(entry_field.get()))
                    command=lambda: take_color('blue'))
-button.place(relx=0.4, rely=0, relwidth=0.1, relheight=1)
+button.place(relx=0.5, rely=0, relwidth=0.1, relheight=1)
 
 def take_color(color):
     global glob_color
@@ -79,6 +88,15 @@ def new_coord2(event):
     create_oval2(x1, y1, x2, y2)
     x1, y1, x2, y2 = 0, 0, 0, 0
 
+def new_coord_line(event):
+    global x1, y1, x2, y2
+    x2 = event.x
+    y2 = event.y
+    # nom_click = 0
+    # canvas.create_oval(x1,y1,x2,y2,fill = 'RED', width=0)
+    create_line2(x1, y1, x2, y2)
+    x1, y1, x2, y2 = 0, 0, 0, 0
+
 
 def cre_ov(event):
     global x1, y1, x2, y2
@@ -89,14 +107,32 @@ def cre_ov(event):
     # canvas.create_oval(x1,y1,x2,y2,fill = 'green', width=0)
     canvas.create_oval(x1,y1,x2,y2, width=1)
 
+def cre_line(event):
+    global x1, y1, x2, y2
+    # canvas.create_oval(x1,y1,x2,y2,fill = 'white', width=0)
+    canvas.create_line(x1,y1,x2,y2,fill = 'white', width=1)
+    x2 = event.x
+    y2 = event.y
+    # canvas.create_oval(x1,y1,x2,y2,fill = 'green', width=0)
+    canvas.create_line(x1,y1,x2,y2, width=1)
+
 def create_oval2(x1, y1, x2, y2):
+    # list1 = x1, 
+    coordinat_list.append([x1, y1, x2, y2, glob_color])
+    for i in coordinat_list:
+
+        # canvas.create_oval(i, 'blue', width=0)
+        # canvas.create_oval(i, outline = glob_color, width=2)
+        canvas.create_oval(i[0], i[1], i[2], i[3], outline = i[4], width=2)
+
+def create_line2(x1, y1, x2, y2):
     # list1 = x1, 
     coordinat_list.append([x1, y1, x2, y2, glob_color])
     for i in coordinat_list:
 
         # canvas.create_oval(i, fill = 'blue', width=0)
         # canvas.create_oval(i, outline = glob_color, width=2)
-        canvas.create_oval(i[0], i[1], i[2], i[3], outline = i[4], width=2)
+        canvas.create_line(i[0], i[1], i[2], i[3], fill = i[4], width=2)
 
 # print(x1, x2)
 
@@ -105,6 +141,12 @@ def my_oval():
     canvas.bind('<Button-1>', new_coord1)
     canvas.bind('<B1-Motion>',cre_ov)
     canvas.bind('<ButtonRelease-1>', new_coord2)
+
+def my_line():
+    canvas.bind('<Button-1>', new_coord1)
+    canvas.bind('<B1-Motion>',cre_line)
+    canvas.bind('<ButtonRelease-1>', new_coord_line)
+
 
 # canvas.bind('<B-1>', new_coord2)
 
