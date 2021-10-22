@@ -9,11 +9,23 @@ y2 = 0
 coordinat_list =[]
 glob_color = 'black'
 
-canvas = Canvas(root, height=HEIGHT, width=WIDTH)
+
+
+canvas = Canvas(root, height=HEIGHT, width=WIDTH, bg="white")
 canvas.pack()
 
-frame = Frame(root, bg="#87cefa", bd=5)
-frame.place(relx=0.5, rely=0.01, relwidth=0.9, relheight=0.05, anchor='n')
+frame = Frame(root, bg="#f0f0f0", bd=5)
+frame.place(relx=0.5, y=0, relwidth=1, height=100, anchor='n')
+
+
+button = Button(frame, 
+                   text="Pencil", 
+                   bg="gray", fg="white", 
+                   font=('Courier', 12), 
+                #    command=lambda: get_weather(entry_field.get()))
+                   command=lambda: my_pencil())
+button.place(relx=0.0, rely=0, relwidth=0.1, relheight=1)
+
 
 button = Button(frame, 
                    text="Oval", 
@@ -79,6 +91,20 @@ def new_coord_line(event):
     create_figure(x1, y1, x2, y2, 'line')
     x1, y1, x2, y2 = 0, 0, 0, 0
 
+# def new_coord_penc(event):
+#     global x1, y1, x2, y2
+#     x1 = event.x
+#     y1 = event.y
+#     create_figure(x1, y1, x1, y1, 'oval')
+#     x1, y1, x2, y2 = 0, 0, 0, 0
+
+def new_coord_penc(event):
+    global x1, y1, x2, y2
+    x1 = event.x
+    y1 = event.y
+    create_figure(x1, y1, x2, y2, 'line')
+    x2 = x1
+    y2 = y1
 
 def cre_ov(event):
     global x1, y1, x2, y2
@@ -94,6 +120,14 @@ def cre_line(event):
     y2 = event.y
     canvas.create_line(x1,y1,x2,y2, width=1)
 
+def cre_penc(event):
+    global x1, y1, x2, y2
+    canvas.create_(x1,y1,x2,y2,outline = 'white', width=1)
+    x2 = event.x
+    y2 = event.y
+    canvas.create_oval(x1,y1,x2,y2, width=1)
+
+
 def create_figure(x1, y1, x2, y2, figure):
     
     coordinat_list.append([figure, x1, y1, x2, y2, glob_color])
@@ -102,6 +136,7 @@ def create_figure(x1, y1, x2, y2, figure):
             canvas.create_line(i[1], i[2], i[3], i[4], fill = i[5], width=2)
         elif i[0] == 'oval':
             canvas.create_oval(i[1], i[2], i[3], i[4], outline = i[5], width=2)
+            # canvas.creat
 
 def my_oval():
     canvas.bind('<Button-1>', new_coord1)
@@ -112,5 +147,14 @@ def my_line():
     canvas.bind('<Button-1>', new_coord1)
     canvas.bind('<B1-Motion>',cre_line)
     canvas.bind('<ButtonRelease-1>', new_coord_line)
+
+def my_pencil():
+    canvas.bind('<Button-1>', new_coord1)
+    canvas.bind('<B1-Motion>',new_coord_penc)
+    canvas.bind('<ButtonRelease-1>', new_coord_penc)
+
+
+# app = ButtonsApp()
+
 
 root.mainloop()
