@@ -104,23 +104,68 @@
 # first_str = 'aabb'
 # first_str = 'a'
 # first_str = 'ijbcf'
-# print(permutations(first_str))
-out_str = []
-def permutations(string):
-    global out_str
-    if len(string) > 1:
-        tmp_list = [string[0], string[1:]]
-        out_str.append(tmp_list)
+# # print(permutations(first_str))
+################################################################
+# out_str = []
+# def permutations(string):
+#     global out_str
+#     if len(string) > 1:
+#         tmp_list = [string[0], string[1:]]
+#         out_str.append(tmp_list)
 
-        print(''.join(tmp_list))
-        if len(string[1:])>1:
-            out_str = permutations(string[1:])
+#         print(''.join(tmp_list))
+#         if len(string[1:])>1:
+#             out_str = permutations(string[1:])
     
-    return out_str
+#     return out_str
 
 
-first_str = 'abcd'
-first_str = 'aabb'
-first_str = 'an'
-first_str = 'ijbcf'
+# first_str = 'abcd'
+# first_str = 'aabb'
+# first_str = 'an'
+# first_str = 'ijbcf'
+# print(permutations(first_str))
+####################################################################
+
+def permutations(string):
+    my_len_str = len(string)
+    my_set = list(set(string))
+    my_count_el = len(my_set)
+    # my_summ = str(my_count_el-1)*my_len_str
+    # my_summ_x = int(my_summ,my_count_el)
+    # my_sort = sorted(string)
+    my_sort = []
+    # tmp_sort = ['d','t']
+    tmp_sort = []
+    # tmp_sort.append(my_sort)
+    # my_start_str = {i: my_set[i] for i in range(my_count_el)}
+    # i = my_summ_x
+    # for j in range(my_len_str):
+    for i in range(my_len_str):
+        my_sort[i] = my_set[0]
+
+    j = 0
+    i = 0
+    while j < my_len_str:
+        while i < my_count_el:
+            my_sort[j] = my_set[i]
+            a = list(my_sort)
+            tmp_sort.append(a)
+            i =+ 1
+            if j>0 and i<my_count_el:
+                j -= 1
+                i = 0
+                
+        i = 0    
+        j += 1
+        
+
+    return tmp_sort
+
+# # first_str = 'abcd'
+# # first_str = 'aabb'
+first_str = 'abc'
+# # first_str = 'ijbcf'
 print(permutations(first_str))
+# permutations(first_str)
+
